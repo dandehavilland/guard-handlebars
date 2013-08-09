@@ -19,7 +19,7 @@ module Guard
         # TODO Do not assume require.js, but make it possible
         
         if @options[:emberjs]
-          compiled = "Ember.TEMPLATES['#{camelcase(function)}'] = Ember.Handlebars.compile('#{escape(source)}');"
+          compiled = "Ember.TEMPLATES['#{@path}'] = Ember.Handlebars.compile('#{escape(source)}');"
         else
           compiled = "(function() {"
           compiled << "\n  define(['handlebars'], function() {"
@@ -31,10 +31,6 @@ module Guard
         end
         
         compiled
-      end
-
-      def camelcase(s)
-        s.gsub(/^[a-z]|_[a-z]/) { |a| a.upcase }.gsub(/_/, '').gsub(/^[A-Z]/) {|a| a.downcase}
       end
 
       def function
