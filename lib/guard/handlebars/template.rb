@@ -19,7 +19,7 @@ module Guard
         # TODO Do not assume require.js, but make it possible
         
         if @options[:emberjs]
-          compiled = "Ember.TEMPLATES['#{@path}'] = Ember.Handlebars.compile('#{escape(source)}');"
+          compiled = "Ember.TEMPLATES['#{slashd}'] = Ember.Handlebars.compile('#{escape(source)}');"
         else
           compiled = "(function() {"
           compiled << "\n  define(['handlebars'], function() {"
@@ -37,6 +37,10 @@ module Guard
         name.sub(/^_/, '').split('.').first
       end
 
+      def slashd
+        name.gsub(/_/,"/")
+      end
+      
       def name
         @path.split('/').last
       end
