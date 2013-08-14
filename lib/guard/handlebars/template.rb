@@ -38,7 +38,7 @@ module Guard
       end
 
       def slashd
-        name.gsub(/_/,"/")
+        name[0] == "_" ? name : name.gsub(/_/,"/")
       end
       
       def name
