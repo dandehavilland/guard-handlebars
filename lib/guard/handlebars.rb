@@ -40,6 +40,15 @@ module Guard
       changed_files = Runner.run(Inspector.clean(paths), watchers, options)
       notify changed_files
     end
+    
+    # Called on file(s) deletions that the Guard watches.
+    #
+    # @param [Array<String>] paths the deleted files or paths
+    # @raise [:task_has_failed] when run_on_change has failed
+    #
+    def run_on_removals(paths)
+      Runner.remove(Inspector.clean(paths, :missing_ok => true), watchers, options)
+    end
 
     private
 

@@ -2,29 +2,17 @@ module Guard
   class Handlebars
     module Inspector
       class << self
-
-        def clean(paths)
+        
+        def clean(paths, options = {})
           paths.uniq!
           paths.compact!
-          paths = paths.select { |p| handlebars_file?(p) }
-          clear_handlebars_files_list
-          paths
+          paths.select { |p| handlebars_file?(p, options) }
         end
-
-      private
-
-        def handlebars_file?(path)
-          handlebars_files.include?(path)
+        
+        private
+        def handlebars_file?(path, options)
+          path =~ /.handlebars$/ && (options[:missing_ok] || File.exists?(path))
         end
-
-        def handlebars_files
-          @handlebars_files ||= Dir.glob('**/*.handlebars')
-        end
-
-        def clear_handlebars_files_list
-          @handlebars_files = nil
-        end
-
       end
     end
   end
